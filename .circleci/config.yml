@@ -1,0 +1,31 @@
+version: 2.1
+
+orbs:
+  slack: circleci/slack@4.1
+
+commands:
+  on-failed-notification:
+    description: The notification on failed
+    steps:
+      - slack/notify:
+          event: fail
+          template: basic_fail_1
+  slack-notification:
+    description: The slack notification
+    steps:
+      - slack/notify:
+          event: pass
+          template: success_tagged_deploy_1
+      - on-faied-notification
+
+jobs:
+  lint
+
+  build
+
+  create-docker-image
+
+  deploy-k8s-cluster
+
+  deploy-app-to-k8s
+
