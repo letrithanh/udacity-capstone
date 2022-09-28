@@ -1,23 +1,5 @@
 version: 2.1
 
-orbs:
-  slack: circleci/slack@4.1
-
-commands:
-  on-failed-notification:
-    description: The notification on failed
-    steps:
-      - slack/notify:
-          event: fail
-          template: basic_fail_1
-  slack-notification:
-    description: The slack notification
-    steps:
-      - slack/notify:
-          event: pass
-          template: success_tagged_deploy_1
-      - on-faied-notification
-
 jobs:
   lint:
     docker:
@@ -37,7 +19,6 @@ jobs:
       - save_cache:
           paths: ["node_modules"]
           key: "node_modules"
-      - on-failed-notification
 
   create-docker-image:
     docker:
@@ -60,9 +41,8 @@ jobs:
       - run: 
           name: Publish Docker Image to Docker Hub
           command: |
-            echo "${DOCKERHUB_PASSWORD}" | docker login -u "${DOCKERHUB_USERNAME}" - password-stdin
+            echo "${DOCKERHUB_PASSWORD}" | docker login -u "${DOCKERHUB_USERNAME}" --password-stdin
             docker push ${DOCKERHUB_USERNAME}/udacity-capstone:${CIRCLE_WORKFLOW_ID:0:7}
-      - on-failed-notification
 
   # deploy-k8s-cluster
 
@@ -71,8 +51,6 @@ jobs:
 workflows:
   default:
     jobs:
-      - lint:
-          context: slack-secrets
-      - create-docker-image:
-          context: slack-secrets
+      - lint
+      - create-docker-image
 
