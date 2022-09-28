@@ -115,43 +115,7 @@ jobs:
       - run:
           name: Deploy backend
           command: |
-            cat \<\< EOF \> deployment.yml
-            apiVersion: apps/v1
-            kind: Deployment
-            metadata:
-              name: uda-capstone
-            spec:
-              replicas: 1
-              selector:
-                matchLabels:
-                  app: uda-capstone
-              template:
-                metadata:
-                  labels:
-                    app: uda-capstone
-                spec:
-                  containers:
-                  - name: uda-capstone
-                    image: ${DOCKERHUB_USERNAME}/udacity-capstone:${CIRCLE_WORKFLOW_ID:0:7}
-                    ports:
-                    - containerPort: 3000
-            
-            ---
-
-            apiVersion: v1
-            kind: Service
-            metadata:
-              name: udacaps-svc
-            spec:
-              type: NodePort
-              ports:
-              - port: 3000
-                targetPort: 3000
-                nodePort: 30080
-              selector:
-                app: uda-capstone
-            EOF
-            
+            sh .circleci/files/deployment.sh ${DOCKERHUB_USERNAME}/udacity-capstone:${CIRCLE_WORKFLOW_ID:0:7}
             mv deployment.yml .circleci/ansible/
             cd .circleci/ansible
             echo "Contents  of the inventory.txt file is -------"
