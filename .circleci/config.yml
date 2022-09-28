@@ -19,13 +19,37 @@ commands:
       - on-faied-notification
 
 jobs:
-  lint
+  lint:
+    docker:
+      - image: circleci/node:16.13
+    steps:
+      - checkout
+      - restore_cache:
+          keys: ["node_modules"]
+      - run:
+          name: install dependencies
+          command: |
+            npm install
+      - run:
+          name: linting code
+          command: |
+            npm run lint
+      - save_cache:
+          paths: ["node_modules"]
+          key: "node_modules"
+      - on-failed-notification
 
-  build
 
-  create-docker-image
+  # build
 
-  deploy-k8s-cluster
+  # create-docker-image
 
-  deploy-app-to-k8s
+  # deploy-k8s-cluster
+
+  # deploy-app-to-k8s
+
+workflows:
+  default:
+    jobs:
+      - lint
 
