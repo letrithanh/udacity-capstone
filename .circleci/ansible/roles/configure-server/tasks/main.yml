@@ -7,7 +7,7 @@
   become: true
   shell: | 
     IS_EXISTED_CLUSTER=$(microk8s.kubectl | grep "command not found")
-    if [ -z "$INFRAS_PUBLIC_IP" ]
+    if [ -z "$IS_EXISTED_CLUSTER" ]
     then
       echo "Installing microk8s..."
       snap install microk8s --classic
