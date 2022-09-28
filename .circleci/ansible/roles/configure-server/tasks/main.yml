@@ -1,0 +1,16 @@
+- name: update apt package
+  become: true
+  apt:
+    update_cache: yes
+
+- name: install microk8s as kubernetes cluster
+  become: true
+  shell: | 
+    IS_EXISTED_CLUSTER=$(microk8s.kubectl | grep "command not found")
+    if [ -z "$INFRAS_PUBLIC_IP" ]
+    then
+      echo "Installing microk8s..."
+      snap install microk8s --classic
+    else
+      echo "microk8s was existed"
+    fi
