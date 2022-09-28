@@ -6,7 +6,7 @@
 - name: install microk8s as kubernetes cluster
   become: true
   shell: | 
-    IS_EXISTED_CLUSTER=$(microk8s.kubectl | grep "not found")
+    IS_EXISTED_CLUSTER=$(which microk8s)
     if [ -z "$IS_EXISTED_CLUSTER" ]
     then
       echo "Installing microk8s..."
