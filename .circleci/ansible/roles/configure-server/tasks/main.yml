@@ -10,7 +10,7 @@
     if [ -z "$IS_EXISTED_CLUSTER" ]
     then
       echo "Installing microk8s..."
-      snap install -y microk8s --classic
+      snap install microk8s --classic
     else
       echo "microk8s was existed"
     fi
