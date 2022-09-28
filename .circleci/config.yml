@@ -51,5 +51,6 @@ jobs:
 workflows:
   default:
     jobs:
-      - lint
+      - lint:
+          context: slack-secrets
 
