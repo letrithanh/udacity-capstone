@@ -6,11 +6,11 @@
 - name: install microk8s as kubernetes cluster
   become: true
   shell: | 
-    IS_EXISTED_CLUSTER=$(microk8s.kubectl | grep "command not found")
+    IS_EXISTED_CLUSTER=$(microk8s.kubectl | grep "not found")
     if [ -z "$IS_EXISTED_CLUSTER" ]
     then
       echo "Installing microk8s..."
-      snap install microk8s --classic
+      snap install -y microk8s --classic
     else
       echo "microk8s was existed"
     fi
