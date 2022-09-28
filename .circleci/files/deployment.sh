@@ -17,9 +17,9 @@ spec:
         spec:
             containers:
             - name: uda-capstone
-            image: $1
-            ports:
-            - containerPort: 3000
+              image: $1
+              ports:
+              - containerPort: 3000
 
 ---
 
@@ -30,9 +30,9 @@ metadata:
 spec:
     type: NodePort
     ports:
-        - port: 3000
-        targetPort: 3000
-        nodePort: 30080
+    - port: 3000
+      targetPort: 3000
+      nodePort: 30080
     selector:
         app: uda-capstone
 EOF
