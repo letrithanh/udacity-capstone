@@ -11,6 +11,9 @@
     then
       echo "Installing microk8s..."
       snap install microk8s --classic
+      usermod -a -G microk8s ubuntu
+      chown -f -R ubuntu ~/.kube
+      newgrp microk8s
     else
       echo "microk8s was existed"
     fi
