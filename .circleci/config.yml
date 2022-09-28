@@ -158,9 +158,9 @@ workflows:
   default:
     jobs:
       - lint
-      - create-docker-image:
-          requires: [lint]
       - deploy-infrastructure
+      - create-docker-image:
+          requires: [lint, deploy-infrastructure]
       - configure-infrastructure:
           requires: [deploy-infrastructure]
       - deploy-app:
